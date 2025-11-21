@@ -1,0 +1,128 @@
+%TF.GenerationSoftware,KiCad,Pcbnew,8.0.8*%
+%TF.CreationDate,2025-03-13T11:30:44-04:00*%
+%TF.ProjectId,Anemosens Sensor,416e656d-6f73-4656-9e73-2053656e736f,rev?*%
+%TF.SameCoordinates,Original*%
+%TF.FileFunction,Soldermask,Top*%
+%TF.FilePolarity,Negative*%
+%FSLAX46Y46*%
+G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
+G04 Created by KiCad (PCBNEW 8.0.8) date 2025-03-13 11:30:44*
+%MOMM*%
+%LPD*%
+G01*
+G04 APERTURE LIST*
+G04 Aperture macros list*
+%AMRoundRect*
+0 Rectangle with rounded corners*
+0 $1 Rounding radius*
+0 $2 $3 $4 $5 $6 $7 $8 $9 X,Y pos of 4 corners*
+0 Add a 4 corners polygon primitive as box body*
+4,1,4,$2,$3,$4,$5,$6,$7,$8,$9,$2,$3,0*
+0 Add four circle primitives for the rounded corners*
+1,1,$1+$1,$2,$3*
+1,1,$1+$1,$4,$5*
+1,1,$1+$1,$6,$7*
+1,1,$1+$1,$8,$9*
+0 Add four rect primitives between the rounded corners*
+20,1,$1+$1,$2,$3,$4,$5,0*
+20,1,$1+$1,$4,$5,$6,$7,0*
+20,1,$1+$1,$6,$7,$8,$9,0*
+20,1,$1+$1,$8,$9,$2,$3,0*%
+%AMHorizOval*
+0 Thick line with rounded ends*
+0 $1 width*
+0 $2 $3 position (X,Y) of the first rounded end (center of the circle)*
+0 $4 $5 position (X,Y) of the second rounded end (center of the circle)*
+0 Add line between two ends*
+20,1,$1,$2,$3,$4,$5,0*
+0 Add two circle primitives to create the rounded ends*
+1,1,$1,$2,$3*
+1,1,$1,$4,$5*%
+%AMRotRect*
+0 Rectangle, with rotation*
+0 The origin of the aperture is its center*
+0 $1 length*
+0 $2 width*
+0 $3 Rotation angle, in degrees counterclockwise*
+0 Add horizontal line*
+21,1,$1,$2,0,0,$3*%
+G04 Aperture macros list end*
+%ADD10C,2.200000*%
+%ADD11RoundRect,0.250000X0.337500X0.475000X-0.337500X0.475000X-0.337500X-0.475000X0.337500X-0.475000X0*%
+%ADD12R,1.308100X0.254000*%
+%ADD13RotRect,1.700000X1.700000X135.000000*%
+%ADD14HorizOval,1.700000X0.000000X0.000000X0.000000X0.000000X0*%
+%ADD15RotRect,1.700000X1.700000X45.000000*%
+%ADD16HorizOval,1.700000X0.000000X0.000000X0.000000X0.000000X0*%
+%ADD17RoundRect,0.250000X0.450000X-0.350000X0.450000X0.350000X-0.450000X0.350000X-0.450000X-0.350000X0*%
+%ADD18R,1.700000X1.700000*%
+%ADD19O,1.700000X1.700000*%
+G04 APERTURE END LIST*
+D10*
+%TO.C,REF\u002A\u002A*%
+X128000000Y-87000000D03*
+%TD*%
+D11*
+%TO.C,C2*%
+X143075000Y-91000000D03*
+X141000000Y-91000000D03*
+%TD*%
+%TO.C,C1*%
+X143075000Y-93060000D03*
+X141000000Y-93060000D03*
+%TD*%
+D12*
+%TO.C,Q1*%
+X133098050Y-91049999D03*
+X133098050Y-91700000D03*
+X133098050Y-92350001D03*
+X133098050Y-93000000D03*
+X133098050Y-93649999D03*
+X133098050Y-94300000D03*
+X133098050Y-94949999D03*
+X138901950Y-94950001D03*
+X138901950Y-94300000D03*
+X138901950Y-93650001D03*
+X138901950Y-93000000D03*
+X138901950Y-92350001D03*
+X138901950Y-91700000D03*
+X138901950Y-91050001D03*
+%TD*%
+D13*
+%TO.C,J2*%
+X140214555Y-100785445D03*
+D14*
+X142010606Y-98989394D03*
+X143806657Y-97193343D03*
+%TD*%
+D15*
+%TO.C,J1*%
+X128203949Y-97203949D03*
+D16*
+X130000000Y-99000000D03*
+X131796051Y-100796051D03*
+%TD*%
+D17*
+%TO.C,R1*%
+X129000000Y-93000000D03*
+X129000000Y-91000000D03*
+%TD*%
+%TO.C,R2*%
+X131000000Y-93000000D03*
+X131000000Y-91000000D03*
+%TD*%
+D18*
+%TO.C,J3*%
+X133475000Y-84000000D03*
+D19*
+X136015000Y-84000000D03*
+X138555000Y-84000000D03*
+%TD*%
+D10*
+%TO.C,REF\u002A\u002A*%
+X144000000Y-87000000D03*
+%TD*%
+%TO.C,REF\u002A\u002A*%
+X136000000Y-103000000D03*
+%TD*%
+M02*

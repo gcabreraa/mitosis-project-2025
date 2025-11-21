@@ -1,0 +1,5 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "AH49ENTR_G1")(type "KiCad")(uri "${KIPRJMOD}/lib/AH49ENTR_G1/AH49ENTR_G1.pretty")(options "")(descr ""))
+  (lib (name "AS5048B_HTSP_500")(type "KiCad")(uri "${KIPRJMOD}/lib/AS5048B_HTSP_500/AS5048B_HTSP_500.pretty")(options "")(descr ""))
+)
