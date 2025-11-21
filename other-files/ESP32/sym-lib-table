@@ -1,0 +1,6 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "ESP32")(type "KiCad")(uri "${KIPRJMOD}/lib/ESP32/ESP32.kicad_sym")(options "")(descr ""))
+  (lib (name "ICM-42670-P")(type "KiCad")(uri "${KIPRJMOD}/lib/ICM_42670_P/ICM-42670-P.kicad_sym")(options "")(descr ""))
+  (lib (name "button")(type "KiCad")(uri "${KIPRJMOD}/lib/Button/button.kicad_sym")(options "")(descr ""))
+)

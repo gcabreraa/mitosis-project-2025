@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #ffffff;
+        }
+
+        label, select, input, button {
+            margin: 10px 5px;
+            font-size: 1em;
+            font-family: inherit;
+        }
+
+        input, select {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            border: 1px solid #444;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        #chart {
+            margin-top: 30px;
+        }
+    </style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature and Humidity Plots</title>
+    <script src="https://cdn.plot.ly/plotly-3.0.0.min.js" charset="utf-8"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+</head>
+
+<body>
+    <h1>Temperature and Humidity Plots</h1>
+
+    <form action="/show_plots" method="get">
+        <label for="start_time">Start Time:</label>
+        <input type="datetime-local" id="start_time" name="start_time" required>
+        
+        <label for="end_time">End Time:</label>
+        <input type="datetime-local" id="end_time" name="end_time" required>
+        
+        <label for="location">Location:</label>
+        <select id="location" name="location" required>
+            <option value="">--Select Location--</option>
+            <option value="Sailing Pavilion">Sailing Pavilion</option>
+            <option value="Outside 36">Outside 36</option>
+            <option value="Stata">Stata</option>
+            <option value="Z-Center">Z-Center</option>
+            <option value="Mass Ave">Mass Ave</option>
+            <option value="Demo">Demo</option>
+        </select>
+
+        <button type="submit">Update</button>
+    </form>
+
+    <button onclick="showcTemp()">Temperature (Celsius)</button>
+    <button onclick="showfTemp()">Temperature (Fahrenheit)</button>
+    <button onclick="showRh()">Humidity</button>
+    <button onclick="showIdx()">Heat Index</button>
+    <button onclick="showLux()">Lux</button>
+    <button onclick="showSoc()">Battery</button>
+    <button onclick="downloadCSV()">Download CSV</button>
+
+    <div id="chart"></div>
+    <div id="map" style="height: 400px; margin-top: 40px;"></div>
+
+    <script type='text/javascript'>
+        function showcTemp() {
+            graphs = {{ graphJSON_ctemp | safe }};
+            Plotly.newPlot('chart',graphs,{});
+        }
+
+        function showfTemp() {
+            graphs = {{ graphJSON_ftemp | safe }};
+            Plotly.newPlot('chart',graphs,{});
+        }
+
+        function showRh() {
+            graphs = {{ graphJSON_rh | safe }};
+            Plotly.newPlot('chart',graphs,{});
+        }
+
+        function showIdx() {
+            graphs = {{ graphJSON_heat_idx | safe }};
+            Plotly.newPlot('chart',graphs,{});
+        }
+
+        function showLux() {
+            graphs = {{ graphJSON_lux | safe }};
+            Plotly.newPlot('chart',graphs,{});
+        }
+
+        function showSoc() {
+            graphs = {{ graphJSON_soc | safe }};
+            Plotly.newPlot('chart',graphs,{});
+        }
+
+        function downloadCSV() {
+            window.location.href = "/download_csv";
+        }
+    </script>
+
+    <script>
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                start_time: params.get('start_time'),
+                end_time: params.get('end_time'),
+                location: params.get('location')
+            };
+        }
+
+        function setDateTimeLocalNow(inputId) {
+            const input = document.getElementById(inputId);
+            const now = new Date();
+            const tzOffset = now.getTimezoneOffset() * 60000;
+            const localISOTime = new Date(now - tzOffset).toISOString().slice(0,16);
+            input.value = localISOTime;
+        }
+
+        window.onload = function () {
+            const { start_time, end_time, location } = getQueryParams();
+
+            if (start_time) {
+                document.getElementById('start_time').value = start_time;
+            }
+
+            setDateTimeLocalNow('end_time');
+
+            if (location) {
+                document.getElementById('location').value = location;
+            }
+        };
+    </script>
+
+    <script>
+        const locationInfo = {
+            "Sailing Pavilion": { name: "Sailing Pavilion", lat: 42.358492, lon: -71.087870, info: "Attached near bike racks" },
+            "Outside 36": { name: "Outside 36", lat: 42.361218, lon: -71.091765, info: "Between buildings 34 and 36" },
+            "Stata": { name: "Stata", lat: 42.361138, lon: -71.090901, info: "Box in raised garden" },
+            "Mass Ave": { name: "Mass Ave", lat: 42.359226, lon: -71.093532, info: "Near Harvard bus stop" },
+            "Z-Center": { name: "Z-Center", lat: 42.358722, lon: -71.095464, info: "Zesiger Sports and Fitness Center" },
+            "Demo": {name: "Demo", lat: 42.361358, lon: -71.091768, info: "With us!"}
+        };
+
+        const map = L.map('map').setView([42.3601, -71.0942], 16);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        const redIcon = new L.Icon({
+            iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png',
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
+        });
+
+        const blueIcon = new L.Icon({
+            iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png',
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
+        });
+
+        const markers = {};
+        for (const [id, loc] of Object.entries(locationInfo)) {
+            const marker = L.marker([loc.lat, loc.lon], { icon: blueIcon })
+                .addTo(map)
+                .bindPopup(`<strong>${loc.name}</strong><br>${loc.info}`);
+            markers[id] = marker;
+        }
+
+        const select = document.getElementById('location');
+        select.addEventListener('change', function () {
+            const selectedId = this.value;
+            Object.values(markers).forEach(m => m.setIcon(blueIcon));
+            if (selectedId && markers[selectedId]) {
+                const marker = markers[selectedId];
+                marker.setIcon(redIcon);
+                map.setView(marker.getLatLng(), 17);
+                marker.openPopup();
+            }
+        });
+
+        window.addEventListener('load', () => {
+            const params = new URLSearchParams(window.location.search);
+            const selectedId = params.get("location");
+            if (selectedId && markers[selectedId]) {
+                markers[selectedId].setIcon(redIcon);
+                map.setView(markers[selectedId].getLatLng(), 17);
+                markers[selectedId].openPopup();
+            }
+        });
+    </script>
+</body>
+</html>

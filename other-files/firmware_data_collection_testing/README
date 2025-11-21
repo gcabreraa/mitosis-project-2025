@@ -1,0 +1,15 @@
+This has a version of the firmware_main code we are using to run tests on the v1 system
+to see how it collects data outside. There are still updates needed to the firmware for
+accurate timestamp tracking if we choose to fill up the flash memory with more than just
+the 24 samples in the RTC buffer before sending over WiFi
+
+The fuel gauge and IMU code are currently commented out, as the fuel gauge isn't quite
+working, and we just want to test for sensor reading functionality with the VEML and SHT40.
+
+Measurements are currently taken every 5 minutes (see SLEEP_TIME_US), and sent once 24
+samples are taken (RTC filled), so it posts to the server about every 2 hours.
+
+To download the database from the server, use this command in a terminal:
+scp fastapi-user@efpi-21.mit.edu:fastapi-nginx-gunicorn/stata_test_log_041025_night.db path/to/file/on_local
+
+with the password being "password"

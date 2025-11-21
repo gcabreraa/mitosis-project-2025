@@ -1,0 +1,6 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "ESP32")(type "KiCad")(uri "${KIPRJMOD}/lib/ESP32/ESP32.pretty")(options "")(descr ""))
+  (lib (name "ICM_42670_P")(type "KiCad")(uri "${KIPRJMOD}/lib/ICM_42670_P/ICM_42670_P.pretty")(options "")(descr ""))
+  (lib (name "button")(type "KiCad")(uri "${KIPRJMOD}/lib/Button/button.pretty")(options "")(descr ""))
+)
