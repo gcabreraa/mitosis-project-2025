@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "VEML7700-TT")(type "KiCad")(uri "${KIPRJMOD}/lib/VEML7700-TT/VEML7700-TT.kicad_sym")(options "")(descr ""))
+)
